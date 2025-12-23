@@ -112,7 +112,7 @@ export function ScheduleGrid({
                 )}
             </div>
 
-            <div className="flex-1 overflow-auto bg-slate-50/30">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden lg:overflow-x-auto bg-slate-50/30 touch-pan-y overscroll-x-none">
                 <div className={`${weekDays.length > 1 ? 'min-w-[800px]' : 'min-w-full'} flex bg-white relative`}>
 
                     {/* Time Column (Sticky) */}
