@@ -1,0 +1,38 @@
+{
+  "name": "tennis-booking",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@dotlottie/react-player": "^1.6.19",
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.87.1",
+    "@vercel/kv": "^3.0.0",
+    "lucide-react": "^0.560.0",
+    "luxon": "^3.7.2",
+    "next": "^14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "supabase": "^2.66.0"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^25.0.1",
+    "@types/react": "^19.2.7",
+    "autoprefixer": "^10.4.22",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.35",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.9.3"
+  }
+}
