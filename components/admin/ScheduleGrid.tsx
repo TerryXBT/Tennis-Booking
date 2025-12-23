@@ -123,7 +123,7 @@ export function ScheduleGrid({
                         {intervals.map((it, i) => (
                             <div key={i} className={`relative ${it.minute === 30 ? 'border-b border-slate-200' : ''}`} style={{ height: ROW_HEIGHT }}>
                                 {it.minute === 0 && (
-                                    <span className="absolute -top-3 left-0 right-0 text-center text-[12px] font-semibold text-slate-600 tracking-wide leading-none tabular-nums">
+                                    <span className="absolute -top-3 left-0 right-0 text-center text-[13px] font-semibold text-slate-600 tracking-wide leading-none tabular-nums">
                                         {DateTime.fromObject({ hour: it.hour }).toFormat("h a")}
                                     </span>
                                 )}
@@ -131,7 +131,7 @@ export function ScheduleGrid({
                         ))}
                         {/* Final limit label */}
                         <div className="relative" style={{ height: ROW_HEIGHT }}>
-                            <span className="absolute -top-3 left-0 right-0 text-center text-[12px] font-semibold text-slate-600 tracking-wide leading-none tabular-nums">
+                            <span className="absolute -top-3 left-0 right-0 text-center text-[13px] font-semibold text-slate-600 tracking-wide leading-none tabular-nums">
                                 {DateTime.fromObject({ hour: HOUR_END }).toFormat("h a")}
                             </span>
                         </div>
@@ -156,7 +156,7 @@ export function ScheduleGrid({
                                         className={`sticky top-0 z-30 bg-white border-b border-slate-200 flex flex-col items-center justify-center gap-2 ${isSelectedDay ? 'shadow-[inset_0_-2px_0_rgba(47,107,176,0.25)]' : ''}`}
                                     >
                                         <span
-                                            className={`text-[11px] tracking-wide font-semibold transition-colors ${isSelectedDay ? 'text-[#184a8e]' : 'text-slate-400'}`}
+                                            className={`text-[12px] tracking-wide font-semibold transition-colors ${isSelectedDay ? 'text-[#184a8e]' : 'text-slate-400'}`}
                                         >
                                             {day.toFormat("cccc")}
                                         </span>
@@ -244,15 +244,15 @@ export function ScheduleGrid({
                                                     `}
                                                     style={{ top, height }}
                                                 >
-                                                    <div className="text-[10px] font-semibold tracking-wide text-slate-400 tabular-nums">
+                                                    <div className="text-[11px] font-semibold tracking-wide text-slate-400 tabular-nums">
                                                         {bStart.toFormat("H:mm")} - {bEnd.toFormat("H:mm")}
                                                     </div>
                                                     {isPublic ? (
-                                                        <div className="text-[11px] font-semibold tracking-wide text-slate-500">
+                                                        <div className="text-[12px] font-semibold tracking-wide text-slate-500">
                                                             Booked
                                                         </div>
                                                     ) : (
-                                                        <div className="font-semibold text-sm tracking-tight text-[#184a8e] truncate leading-none">
+                                                        <div className="font-semibold text-[15px] tracking-tight text-[#184a8e] truncate leading-none">
                                                             {booking.student_name}
                                                         </div>
                                                     )}
