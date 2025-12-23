@@ -288,7 +288,7 @@ export function AdminBookingModal({ slot, booking, onClose, onSuccess }: AdminBo
                                         <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-3.5 h-3.5" />
                                         <input
                                             ref={firstInputRef}
-                                            className={`w-full bg-slate-50 border ${formErrors.student_name ? 'border-red-400' : 'border-slate-200'} rounded-xl pl-10 pr-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold placeholder:text-slate-300 text-sm md:text-base`}
+                                            className={`w-full bg-slate-50 border ${formErrors.student_name ? 'border-red-400' : 'border-slate-200'} rounded-xl pl-10 pr-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold placeholder:text-slate-300 text-base`}
                                             value={formValues.student_name}
                                             onChange={(e) => handleFieldChange("student_name", e.target.value)}
                                             placeholder="Name"
@@ -299,7 +299,7 @@ export function AdminBookingModal({ slot, booking, onClose, onSuccess }: AdminBo
                                 <div className="space-y-1.5">
                                     <label className="text-[11px] uppercase tracking-[0.2em] text-slate-500 ml-4 font-black italic">Age Group</label>
                                     <select
-                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold appearance-none cursor-pointer text-sm md:text-base"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold appearance-none cursor-pointer text-base"
                                         value={formValues.age_group}
                                         onChange={(e) => handleFieldChange("age_group", e.target.value as "kid" | "adult")}
                                     >
@@ -316,7 +316,7 @@ export function AdminBookingModal({ slot, booking, onClose, onSuccess }: AdminBo
                                     <div className="relative">
                                         <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-3.5 h-3.5" />
                                         <input
-                                            className={`w-full bg-slate-50 border ${formErrors.contact_phone ? 'border-red-400' : 'border-slate-200'} rounded-xl pl-10 pr-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold placeholder:text-slate-300 text-sm md:text-base`}
+                                            className={`w-full bg-slate-50 border ${formErrors.contact_phone ? 'border-red-400' : 'border-slate-200'} rounded-xl pl-10 pr-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold placeholder:text-slate-300 text-base`}
                                             value={formValues.contact_phone}
                                             onChange={(e) => handleFieldChange("contact_phone", e.target.value)}
                                             placeholder="04xx..."
@@ -330,7 +330,7 @@ export function AdminBookingModal({ slot, booking, onClose, onSuccess }: AdminBo
                                         type="number"
                                         min={1}
                                         max={MAX_GROUP_SIZE}
-                                        className={`w-full bg-slate-50 border ${formErrors.group_size ? 'border-red-400' : 'border-slate-200'} rounded-xl px-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold text-sm md:text-base`}
+                                        className={`w-full bg-slate-50 border ${formErrors.group_size ? 'border-red-400' : 'border-slate-200'} rounded-xl px-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold text-base`}
                                         value={formValues.group_size}
                                         onChange={(e) => handleFieldChange("group_size", parseInt(e.target.value))}
                                     />
@@ -345,7 +345,7 @@ export function AdminBookingModal({ slot, booking, onClose, onSuccess }: AdminBo
                                     <div className="relative">
                                         <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-3.5 h-3.5" />
                                         <input
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold placeholder:text-slate-300 text-sm md:text-base"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold placeholder:text-slate-300 text-base"
                                             value={formValues.contact_email}
                                             onChange={(e) => handleFieldChange("contact_email", e.target.value)}
                                             placeholder="Optional"
@@ -357,7 +357,7 @@ export function AdminBookingModal({ slot, booking, onClose, onSuccess }: AdminBo
                                     <div className="relative">
                                         <Trophy className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-3.5 h-3.5" />
                                         <select
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold appearance-none cursor-pointer text-sm md:text-base"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3 outline-none focus:border-[#2f6bb0] focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-900 font-bold appearance-none cursor-pointer text-base"
                                             value={formValues.skill_level}
                                             onChange={(e) => handleFieldChange("skill_level", e.target.value)}
                                         >
