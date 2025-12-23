@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { DateTime } from "luxon";
 import type { StudentType } from "@/types";
 import { BUSINESS_HOURS, MAX_BOOKING_DAYS } from "@/lib/time";
@@ -257,8 +258,14 @@ export function ScheduleGrid({
                                                     )}
                                                     {!isPublic && member?.avatar && (
                                                         <div className="mt-auto flex items-center gap-2">
-                                                            <div className="w-5 h-5 rounded-full bg-[#dfff00] flex items-center justify-center border border-black/5 overflow-hidden">
-                                                                <img src={member.avatar} alt="" className="w-full h-full object-cover" />
+                                                            <div className="w-5 h-5 rounded-full bg-[#dfff00] flex items-center justify-center border border-black/5 overflow-hidden relative">
+                                                                <Image
+                                                                    src={member.avatar}
+                                                                    alt={member.name}
+                                                                    fill
+                                                                    sizes="20px"
+                                                                    className="object-cover"
+                                                                />
                                                             </div>
                                                             <span className="text-[9px] font-black uppercase text-slate-400">{member.name}</span>
                                                         </div>
