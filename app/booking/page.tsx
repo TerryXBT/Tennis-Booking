@@ -167,7 +167,7 @@ export default function StudentBookingPage() {
   };
 
   return (
-    <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:flex-row selection:bg-[#dfff00] selection:text-black">
+    <div className="flex h-[100dvh] bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:flex-row selection:bg-[#dfff00] selection:text-black">
       <div className="hidden lg:block h-full border-r border-slate-200 bg-white">
         <AdminSidebar
           currentDate={currentDate}

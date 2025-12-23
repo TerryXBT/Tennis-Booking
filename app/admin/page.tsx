@@ -187,7 +187,7 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <div className="flex h-screen bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:flex-row">
+    <div className="flex h-[100dvh] bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:flex-row">
       <div className="hidden lg:block h-full border-r border-slate-200 bg-white">
         <AdminSidebar
           currentDate={currentDate}
