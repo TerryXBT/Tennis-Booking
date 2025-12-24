@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { DateTime } from "luxon";
 import { CheckCircle } from "lucide-react";
 
@@ -209,6 +208,7 @@ export default function AdminPage() {
               onDateSelect={handleDateSelect}
               teamMembers={TEAM_MEMBERS}
               allowPast={true}
+              showHomeLink={true}
             />
           </div>
         </div>
@@ -223,13 +223,6 @@ export default function AdminPage() {
       />
 
       <main className="flex-1 flex flex-col min-w-0 bg-white lg:m-4 lg:rounded-[2.5rem] border-0 lg:border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden relative h-full">
-        <Link
-          href="/"
-          className="absolute bottom-4 left-4 z-40 w-12 h-12 rounded-2xl bg-[#dfff00] flex items-center justify-center shadow-lg border border-black/5 hover:scale-105 transition-transform"
-          aria-label="Back to landing page"
-        >
-          <span className="text-black font-black text-xs">YS</span>
-        </Link>
         <AdminHeader
           currentDate={currentDate}
           onSetToday={handleSetToday}

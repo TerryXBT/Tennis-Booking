@@ -7,6 +7,7 @@ type AdminSidebarProps = {
     onDateSelect: (date: DateTime) => void;
     teamMembers?: Array<{ name: string; avatar: string; color: string }>;
     allowPast?: boolean;
+    showHomeLink?: boolean;
 };
 
 const LOCATIONS = [
@@ -30,7 +31,12 @@ const LOCATIONS = [
     }
 ];
 
-export function AdminSidebar({ currentDate, onDateSelect, allowPast = false }: AdminSidebarProps) {
+export function AdminSidebar({
+    currentDate,
+    onDateSelect,
+    allowPast = false,
+    showHomeLink = false
+}: AdminSidebarProps) {
     return (
         <aside className="w-[260px] border-r border-slate-200 bg-white flex flex-col h-full flex-shrink-0 shadow-sm">
             {/* Brand Header */}
@@ -93,18 +99,20 @@ export function AdminSidebar({ currentDate, onDateSelect, allowPast = false }: A
 
             </div>
 
-            <div className="p-4 border-t border-slate-100">
-                <Link
-                    href="/"
-                    className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2.5 shadow-sm hover:shadow-md transition-all"
-                    aria-label="Back to landing page"
-                >
-                    <div className="w-12 h-12 bg-[#dfff00] rounded-2xl flex items-center justify-center shadow-lg border border-black/5">
-                        <span className="text-black font-black text-xs">YS</span>
-                    </div>
-                    <div className="text-sm font-semibold text-slate-700">Back to Home</div>
-                </Link>
-            </div>
+            {showHomeLink && (
+                <div className="p-4 border-t border-slate-100">
+                    <Link
+                        href="/"
+                        className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2.5 shadow-sm hover:shadow-md transition-all"
+                        aria-label="Back to landing page"
+                    >
+                        <div className="w-12 h-12 bg-[#dfff00] rounded-2xl flex items-center justify-center shadow-lg border border-black/5">
+                            <span className="text-black font-black text-xs">YS</span>
+                        </div>
+                        <div className="text-sm font-semibold text-slate-700">Back to Home</div>
+                    </Link>
+                </div>
+            )}
 
         </aside>
     );

@@ -68,7 +68,7 @@ export function CalendarWidget({
                 </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-2 text-center text-[10px] tracking-wide text-slate-400 mb-4 font-semibold">
+            <div className="grid grid-cols-7 gap-3 text-center text-[10px] tracking-wide text-slate-400 mb-4 font-semibold">
                 <div>Mon</div>
                 <div>Tue</div>
                 <div>Wed</div>
@@ -77,7 +77,7 @@ export function CalendarWidget({
                 <div>Sat</div>
                 <div>Sun</div>
             </div>
-            <div className="grid grid-cols-7 gap-2 text-center text-sm">
+            <div className="grid grid-cols-7 gap-3 text-center text-sm">
                 {calendarDays.map((date) => {
                     const isCurrentMonth = date.hasSame(displayDate, "month");
                     const isSelected = date.hasSame(currentDate, "day");
@@ -88,7 +88,7 @@ export function CalendarWidget({
                     const isDisabled = (!allowPast && isBeforeToday) || isAfterMax;
 
                     if (!isCurrentMonth) {
-                        return <div key={date.toString()} className="h-7 w-7" />;
+                        return <div key={date.toString()} className="h-6 w-6" />;
                     }
 
                     return (
@@ -98,7 +98,7 @@ export function CalendarWidget({
                             onClick={() => onDateSelect(date)}
                             title={isDisabled ? `Bookings are only allowed within the next ${MAX_BOOKING_DAYS} days` : undefined}
                             className={`
-                                h-7 w-7 rounded-md flex flex-col items-center justify-center text-[10px] font-medium transition-all relative
+                                h-6 w-6 rounded-md flex flex-col items-center justify-center text-[10px] font-medium transition-all relative
                                 ${isDisabled ? "text-slate-200 cursor-not-allowed" : "text-slate-600 hover:bg-blue-50 hover:text-[#2f6bb0]"}
                                 ${isSelected ? "!bg-[#2f6bb0] !text-white hover:!bg-[#184a8e]" : ""}
                                 ${isToday && !isSelected ? "bg-blue-100/50" : ""}
