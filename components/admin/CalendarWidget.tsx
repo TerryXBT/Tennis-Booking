@@ -88,7 +88,7 @@ export function CalendarWidget({
                     const isDisabled = (!allowPast && isBeforeToday) || isAfterMax;
 
                     if (!isCurrentMonth) {
-                        return <div key={date.toString()} className="h-10 w-10" />;
+                        return <div key={date.toString()} className="h-9 w-9" />;
                     }
 
                     return (
@@ -98,9 +98,9 @@ export function CalendarWidget({
                             onClick={() => onDateSelect(date)}
                             title={isDisabled ? `Bookings are only allowed within the next ${MAX_BOOKING_DAYS} days` : undefined}
                             className={`
-                                h-10 w-10 rounded-xl flex flex-col items-center justify-center text-xs font-medium transition-all relative
+                                h-9 w-9 rounded-lg flex flex-col items-center justify-center text-xs font-medium transition-all relative
                                 ${isDisabled ? "text-slate-200 cursor-not-allowed" : "text-slate-600 hover:bg-blue-50 hover:text-[#2f6bb0]"}
-                                ${isSelected ? "!bg-[#2f6bb0] !text-white shadow-md hover:!bg-[#184a8e]" : ""}
+                                ${isSelected ? "!bg-[#2f6bb0] !text-white hover:!bg-[#184a8e]" : ""}
                                 ${isToday && !isSelected ? "bg-blue-100/50" : ""}
                             `}
                         >

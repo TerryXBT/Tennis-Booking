@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { DateTime } from "luxon";
+import { useEffect, useRef, useState } from "react";
 import type { StudentType } from "@/types";
 import { BUSINESS_HOURS, MAX_BOOKING_DAYS } from "@/lib/time";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -53,6 +54,32 @@ export function ScheduleGrid({
     disableNext,
     onBookingClick
 }: ScheduleGridProps) {
+    const [isScrolling, setIsScrolling] = useState(false);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const scrollTimeoutRef = useRef<number | null>(null);
+
+    useEffect(() => {
+        const scrollEl = scrollRef.current;
+        if (!scrollEl) return;
+
+        const handleScroll = () => {
+            setIsScrolling(true);
+            if (scrollTimeoutRef.current !== null) {
+                window.clearTimeout(scrollTimeoutRef.current);
+            }
+            scrollTimeoutRef.current = window.setTimeout(() => {
+                setIsScrolling(false);
+            }, 700);
+        };
+
+        scrollEl.addEventListener("scroll", handleScroll, { passive: true });
+        return () => {
+            if (scrollTimeoutRef.current !== null) {
+                window.clearTimeout(scrollTimeoutRef.current);
+            }
+            scrollEl.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
     const hours = Array.from({ length: HOUR_END - HOUR_START }, (_, i) => HOUR_START + i);
     const intervals = hours.flatMap(h => [
         { hour: h, minute: 0 },
@@ -112,7 +139,10 @@ export function ScheduleGrid({
                 )}
             </div>
 
-            <div className="flex-1 overflow-y-auto overflow-x-hidden lg:overflow-x-auto bg-slate-50/30 touch-pan-y overscroll-x-none pb-[calc(env(safe-area-inset-bottom)+96px)] lg:pb-0">
+            <div
+                ref={scrollRef}
+                className={`flex-1 overflow-y-auto overflow-x-hidden lg:overflow-x-auto bg-slate-50/30 touch-pan-y overscroll-x-none pb-[calc(env(safe-area-inset-bottom)+96px)] lg:pb-0 ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}`}
+            >
                 <div className={`${weekDays.length > 1 ? 'min-w-[800px]' : 'min-w-full'} flex bg-white relative`}>
 
                     {/* Time Column (Sticky) */}
