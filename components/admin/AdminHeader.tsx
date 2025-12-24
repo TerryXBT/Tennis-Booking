@@ -1,4 +1,4 @@
-import { LayoutGrid, Calendar, Menu } from "lucide-react";
+import { LayoutGrid, Calendar, Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { DateTime } from "luxon";
 
 type AdminHeaderProps = {
@@ -9,6 +9,8 @@ type AdminHeaderProps = {
     onViewModeChange: (mode: "daily" | "weekly") => void;
     onToggleSidebar?: () => void;
     onDateClick?: () => void;
+    onToggleSidebarCollapse?: () => void;
+    isSidebarCollapsed?: boolean;
 };
 
 export function AdminHeader({
@@ -18,7 +20,9 @@ export function AdminHeader({
     viewMode,
     onViewModeChange,
     onToggleSidebar,
-    onDateClick
+    onDateClick,
+    onToggleSidebarCollapse,
+    isSidebarCollapsed = false
 }: AdminHeaderProps) {
     const weekEnd = currentDate.plus({ days: 6 });
     let dateTitle = "";
@@ -100,6 +104,15 @@ export function AdminHeader({
                 </button>
 
                 <div className="flex items-center gap-2">
+                    {onToggleSidebarCollapse && (
+                        <button
+                            onClick={onToggleSidebarCollapse}
+                            className="hidden lg:flex p-2.5 text-slate-400 hover:text-[#2f6bb0] rounded-xl hover:bg-white hover:shadow-md transition-all active:scale-90"
+                            title={isSidebarCollapsed ? "Show sidebar" : "Hide sidebar"}
+                        >
+                            {isSidebarCollapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
+                        </button>
+                    )}
                     {onRefresh && (
                         <button
                             onClick={onRefresh}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { DateTime } from "luxon";
 import { CheckCircle } from "lucide-react";
 
@@ -44,6 +45,7 @@ export default function AdminPage() {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobilePickerOpen, setIsMobilePickerOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
 
   const [viewMode, setViewMode] = useState<'daily' | 'weekly'>('weekly');
@@ -188,14 +190,16 @@ export default function AdminPage() {
 
   return (
     <div className="flex h-[100dvh] bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:flex-row">
-      <div className="hidden lg:block h-full border-r border-slate-200 bg-white">
-        <AdminSidebar
-          currentDate={currentDate}
-          onDateSelect={handleDateSelect}
-          teamMembers={TEAM_MEMBERS}
-          allowPast={true}
-        />
-      </div>
+      {!isSidebarCollapsed && (
+        <div className="hidden lg:block h-full border-r border-slate-200 bg-white">
+          <AdminSidebar
+            currentDate={currentDate}
+            onDateSelect={handleDateSelect}
+            teamMembers={TEAM_MEMBERS}
+            allowPast={true}
+          />
+        </div>
+      )}
 
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 lg:hidden backdrop-blur-md transition-opacity" onClick={() => setIsSidebarOpen(false)}>
@@ -219,6 +223,13 @@ export default function AdminPage() {
       />
 
       <main className="flex-1 flex flex-col min-w-0 bg-white lg:m-4 lg:rounded-[2.5rem] border-0 lg:border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden relative h-full">
+        <Link
+          href="/"
+          className="absolute bottom-4 left-4 z-40 w-12 h-12 rounded-2xl bg-[#dfff00] flex items-center justify-center shadow-lg border border-black/5 hover:scale-105 transition-transform"
+          aria-label="Back to landing page"
+        >
+          <span className="text-black font-black text-xs">YS</span>
+        </Link>
         <AdminHeader
           currentDate={currentDate}
           onSetToday={handleSetToday}
@@ -227,6 +238,8 @@ export default function AdminPage() {
           onViewModeChange={setViewMode}
           onToggleSidebar={() => setIsSidebarOpen(true)}
           onDateClick={() => setIsMobilePickerOpen(true)}
+          onToggleSidebarCollapse={() => setIsSidebarCollapsed((prev) => !prev)}
+          isSidebarCollapsed={isSidebarCollapsed}
         />
 
         {loading && (

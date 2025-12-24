@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { DateTime } from "luxon";
 
 import { COACH_TIMEZONE } from "@/lib/time";
@@ -44,6 +45,7 @@ export default function StudentBookingPage() {
   const [viewMode, setViewMode] = useState<'daily' | 'weekly'>('weekly');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileDatePickerOpen, setIsMobileDatePickerOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -168,12 +170,14 @@ export default function StudentBookingPage() {
 
   return (
     <div className="flex h-[100dvh] bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:flex-row selection:bg-[#dfff00] selection:text-black">
-      <div className="hidden lg:block h-full border-r border-slate-200 bg-white">
-        <AdminSidebar
-          currentDate={currentDate}
-          onDateSelect={handleDateSelect}
-        />
-      </div>
+      {!isSidebarCollapsed && (
+        <div className="hidden lg:block h-full border-r border-slate-200 bg-white">
+          <AdminSidebar
+            currentDate={currentDate}
+            onDateSelect={handleDateSelect}
+          />
+        </div>
+      )}
 
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 lg:hidden backdrop-blur-md transition-opacity" onClick={() => setIsSidebarOpen(false)}>
@@ -187,6 +191,13 @@ export default function StudentBookingPage() {
       )}
 
       <main className="flex-1 flex flex-col min-w-0 bg-white lg:m-4 lg:rounded-[2.5rem] border-0 lg:border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden relative h-full">
+        <Link
+          href="/"
+          className="absolute bottom-4 left-4 z-40 w-12 h-12 rounded-2xl bg-[#dfff00] flex items-center justify-center shadow-lg border border-black/5 hover:scale-105 transition-transform"
+          aria-label="Back to landing page"
+        >
+          <span className="text-black font-black text-xs">YS</span>
+        </Link>
         <AdminHeader
           currentDate={displayedDays[0]}
           onSetToday={handleSetToday}
@@ -195,6 +206,8 @@ export default function StudentBookingPage() {
           onViewModeChange={setViewMode}
           onToggleSidebar={() => setIsSidebarOpen(true)}
           onDateClick={() => setIsMobileDatePickerOpen(true)}
+          onToggleSidebarCollapse={() => setIsSidebarCollapsed((prev) => !prev)}
+          isSidebarCollapsed={isSidebarCollapsed}
         />
 
 
