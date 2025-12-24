@@ -36,7 +36,7 @@ type ScheduleGridProps = {
 
 const SLOT_DURATION = 30; // minutes
 const ROW_HEIGHT = 50; // Height for a 30-min slot
-const HEADER_HEIGHT = 64; // Fixed height for alignment between time/day columns
+const HEADER_HEIGHT = 44; // Fixed height for alignment between time/day columns
 const HOUR_START = BUSINESS_HOURS.START;
 const HOUR_END = BUSINESS_HOURS.END;
 
@@ -139,6 +139,7 @@ export function ScheduleGrid({
     const clampedNowMinutes = Math.min(Math.max(nowMinutes, 0), totalMinutes);
     const timeLineTop = clampedNowMinutes * slotPixels;
     const showTimeLineGlobal = now.hour >= HOUR_START && now.hour < HOUR_END && slotPixels > 0;
+    const isSingleDay = weekDays.length === 1;
 
     useEffect(() => {
         setHasAutoScrolled(false);
@@ -215,28 +216,6 @@ export function ScheduleGrid({
 
     return (
         <div className="flex-1 overflow-hidden flex flex-col relative bg-white border-t border-slate-100">
-            {/* Nav Controls Overlay (Floating) */}
-            <div className="absolute top-9 left-0 right-0 z-50 pointer-events-none flex justify-between px-2">
-                {onPrevWindow && (
-                    <button
-                        onClick={onPrevWindow}
-                        disabled={disablePrev}
-                        className="w-10 h-10 bg-white shadow-xl rounded-full flex items-center justify-center border border-slate-200 pointer-events-auto hover:bg-slate-50 disabled:opacity-0 transition-all active:scale-90"
-                    >
-                        <ChevronLeft size={20} className="text-[#2f6bb0]" />
-                    </button>
-                )}
-                {onNextWindow && (
-                    <button
-                        onClick={onNextWindow}
-                        disabled={disableNext}
-                        className="w-10 h-10 bg-white shadow-xl rounded-full flex items-center justify-center border border-slate-200 pointer-events-auto hover:bg-slate-50 disabled:opacity-0 transition-all active:scale-90"
-                    >
-                        <ChevronRight size={20} className="text-[#2f6bb0]" />
-                    </button>
-                )}
-            </div>
-
             <div
                 ref={scrollRef}
                 className={`flex-1 overflow-y-auto overflow-x-hidden lg:overflow-x-auto bg-slate-50/30 touch-pan-y overscroll-x-none pb-[calc(env(safe-area-inset-bottom)+96px)] lg:pb-0 ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}`}
@@ -244,14 +223,14 @@ export function ScheduleGrid({
                 <div className={`${weekDays.length > 1 ? 'min-w-[800px]' : 'min-w-full'} flex bg-white relative`}>
 
                     {/* Time Column (Sticky) */}
-                    <div className="w-20 flex-shrink-0 sticky left-0 z-50 bg-white border-r border-slate-200 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+                    <div className="w-20 flex-shrink-0 sticky left-0 z-30 bg-white border-r border-slate-200 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
                         {/* Header Spacer */}
-                        <div style={{ height: HEADER_HEIGHT }} className="border-b border-slate-200 flex items-end justify-center pb-2">
+                        <div style={{ height: HEADER_HEIGHT }} className="border-b border-slate-200 flex items-end justify-center pb-0.5">
                         </div>
                         {intervals.map((it, i) => (
                             <div key={i} className="relative" style={{ height: ROW_HEIGHT }}>
                                 {it.minute === 0 && (
-                                    <span className="absolute -top-2 left-0 right-0 text-center text-[13px] font-semibold text-slate-600 tracking-wide leading-none tabular-nums bg-white px-1">
+                                    <span className="absolute top-1 left-0 right-0 z-10 text-center text-[13px] font-semibold text-slate-600 tracking-wide leading-none tabular-nums bg-white px-1">
                                         {DateTime.fromObject({ hour: it.hour }).toFormat("h a")}
                                     </span>
                                 )}
@@ -259,7 +238,7 @@ export function ScheduleGrid({
                         ))}
                         {/* Final limit label */}
                         <div className="relative" style={{ height: ROW_HEIGHT }}>
-                            <span className="absolute -top-2 left-0 right-0 text-center text-[13px] font-semibold text-slate-600 tracking-wide leading-none tabular-nums bg-white px-1">
+                            <span className="absolute top-1 left-0 right-0 z-10 text-center text-[13px] font-semibold text-slate-600 tracking-wide leading-none tabular-nums bg-white px-1">
                                 {DateTime.fromObject({ hour: HOUR_END }).toFormat("h a")}
                             </span>
                         </div>
@@ -272,6 +251,11 @@ export function ScheduleGrid({
                             const isSelectedDay = selectedDate ? day.hasSame(selectedDate, "day") : false;
                             const isoDate = day.toISODate();
                             const dayBookings = isoDate ? bookingsByDate.get(isoDate) || [] : [];
+                            const headerHighlightClass = isSelectedDay
+                                ? "bg-blue-50/60 shadow-[inset_0_-2px_0_rgba(47,107,176,0.45)]"
+                                : isToday
+                                    ? "bg-[#dfff00]/10"
+                                    : "";
 
                             return (
                                 <div
@@ -281,25 +265,79 @@ export function ScheduleGrid({
                                     {/* Sticky Individual Day Header */}
                                     <div
                                         style={{ height: HEADER_HEIGHT }}
-                                        className={`sticky top-0 z-30 bg-white border-b border-slate-200 flex flex-col items-center justify-center gap-1 ${isSelectedDay ? 'shadow-[inset_0_-2px_0_rgba(47,107,176,0.25)]' : ''}`}
+                                        className={`sticky top-0 z-20 bg-white border-b border-slate-200 ${headerHighlightClass}`}
                                     >
-                                        <span
-                                            className={`text-[11px] tracking-wide font-semibold transition-colors ${isSelectedDay ? 'text-[#184a8e]' : 'text-slate-400'}`}
-                                        >
-                                            {day.toFormat("cccc")}
-                                        </span>
-                                        <div className={`
-                                            w-10 h-10 flex items-center justify-center font-semibold text-xl transition-all
-                                            ${isToday || isSelectedDay ? "text-[#184a8e] relative" : "text-slate-900"}
-                                        `}>
-                                            {day.day}
-                                            {isToday && (
-                                                <div className="absolute -bottom-1 left-4 right-4 h-1 bg-[#dfff00] rounded-full shadow-[0_0_6px_rgba(223,255,0,0.6)]" />
-                                            )}
-                                            {isSelectedDay && !isToday && (
-                                                <div className="absolute -bottom-1 left-4 right-4 h-1 bg-blue-100 rounded-full" />
-                                            )}
-                                        </div>
+                                        {isSingleDay ? (
+                                            <div className="relative flex items-center justify-between w-full h-full px-2">
+                                                <button
+                                                    onClick={() => onPrevWindow?.()}
+                                                    disabled={!onPrevWindow || disablePrev}
+                                                    aria-label="Previous day"
+                                                    className="p-1.5 rounded-lg text-slate-500 hover:text-[#2f6bb0] hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                                >
+                                                    <ChevronLeft size={18} />
+                                                </button>
+                                                <span
+                                                    className={`flex-1 min-w-0 px-2 text-center text-[13px] font-semibold tracking-wide truncate ${isToday || isSelectedDay ? "text-[#184a8e]" : "text-slate-700"}`}
+                                                    title={day.toFormat("cccc, d LLL yyyy")}
+                                                >
+                                                    {day.toFormat("ccc, d LLL")}
+                                                </span>
+                                                <button
+                                                    onClick={() => onNextWindow?.()}
+                                                    disabled={!onNextWindow || disableNext}
+                                                    aria-label="Next day"
+                                                    className="p-1.5 rounded-lg text-slate-500 hover:text-[#2f6bb0] hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                                >
+                                                    <ChevronRight size={18} />
+                                                </button>
+                                                {isToday && (
+                                                    <div className="absolute bottom-1 left-16 right-16 h-1 bg-[#dfff00] rounded-full shadow-[0_0_6px_rgba(223,255,0,0.6)]" />
+                                                )}
+                                                {isSelectedDay && !isToday && (
+                                                    <div className="absolute bottom-1 left-16 right-16 h-1 bg-blue-100 rounded-full" />
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <div className="relative flex flex-col items-center justify-center h-full px-2 gap-0.5">
+                                                {dIdx === 0 && onPrevWindow && (
+                                                    <button
+                                                        onClick={onPrevWindow}
+                                                        disabled={disablePrev}
+                                                        aria-label="Previous week"
+                                                        className="absolute left-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/90 border border-slate-200 text-slate-400 shadow-sm hover:text-[#2f6bb0] hover:border-slate-300 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                                    >
+                                                        <ChevronLeft size={18} />
+                                                    </button>
+                                                )}
+                                                {dIdx === weekDays.length - 1 && onNextWindow && (
+                                                    <button
+                                                        onClick={onNextWindow}
+                                                        disabled={disableNext}
+                                                        aria-label="Next week"
+                                                        className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/90 border border-slate-200 text-slate-400 shadow-sm hover:text-[#2f6bb0] hover:border-slate-300 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                                    >
+                                                        <ChevronRight size={18} />
+                                                    </button>
+                                                )}
+                                                <span
+                                                    className={`text-[9px] font-semibold tracking-[0.24em] uppercase leading-none transition-colors ${isSelectedDay || isToday ? "text-[#184a8e]" : "text-slate-400"}`}
+                                                >
+                                                    {day.toFormat("ccc")}
+                                                </span>
+                                                <div className={`
+                                                    flex items-center justify-center font-semibold text-[16px] leading-none transition-colors
+                                                    ${isSelectedDay || isToday ? "text-[#184a8e]" : "text-slate-900"}
+                                                `}>
+                                                    {day.day}
+                                                </div>
+                                                {(isToday || isSelectedDay) && (
+                                                    <div
+                                                        className={`absolute bottom-0 left-5 right-5 h-0.5 rounded-full ${isToday ? "bg-[#dfff00]" : "bg-[#2f6bb0]"}`}
+                                                    />
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Grid Body for this Day */}

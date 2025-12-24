@@ -44,7 +44,7 @@ export default function StudentBookingPage() {
   const [viewMode, setViewMode] = useState<'daily' | 'weekly'>('weekly');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileDatePickerOpen, setIsMobileDatePickerOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -168,9 +168,15 @@ export default function StudentBookingPage() {
   };
 
   return (
-    <div className="flex h-[100dvh] bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:flex-row selection:bg-[#dfff00] selection:text-black">
+    <div
+      className={`flex h-[100dvh] bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:grid lg:gap-4 lg:p-4 selection:bg-[#dfff00] selection:text-black ${isSidebarCollapsed
+        ? "lg:grid-cols-[minmax(0,1fr)]"
+        : "lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)]"
+        }`}
+      style={{ "--sidebar-width": "280px" } as React.CSSProperties}
+    >
       {!isSidebarCollapsed && (
-        <div className="hidden lg:block h-full border-r border-slate-200 bg-white">
+        <div className="hidden lg:block h-full border border-slate-200 bg-white rounded-[2rem] overflow-hidden">
           <AdminSidebar
             currentDate={currentDate}
             onDateSelect={handleDateSelect}
@@ -179,18 +185,17 @@ export default function StudentBookingPage() {
       )}
 
       {isSidebarOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 lg:hidden backdrop-blur-md transition-opacity" onClick={() => setIsSidebarOpen(false)}>
+        <div className="fixed inset-0 z-[80] bg-slate-900/60 lg:hidden backdrop-blur-md transition-opacity" onClick={() => setIsSidebarOpen(false)}>
           <div className="absolute left-0 top-0 bottom-0 w-[320px] bg-white shadow-2xl overflow-y-auto" onClick={e => e.stopPropagation()}>
             <AdminSidebar
               currentDate={currentDate}
               onDateSelect={handleDateSelect}
-              showHomeLink={true}
             />
           </div>
         </div>
       )}
 
-      <main className="flex-1 flex flex-col min-w-0 bg-white lg:m-4 lg:rounded-[2.5rem] border-0 lg:border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden relative h-full">
+      <main className="flex-1 flex flex-col min-w-0 bg-white lg:rounded-[2.5rem] border-0 lg:border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden relative h-full">
         <AdminHeader
           currentDate={displayedDays[0]}
           onSetToday={handleSetToday}

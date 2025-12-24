@@ -45,30 +45,30 @@ export function CalendarWidget({
 
     return (
         <div className={className}>
-            <div className="flex items-center justify-between mb-4 px-2">
-                <h2 className="font-semibold text-slate-900 text-lg tracking-tight">
+            <div className="flex items-center justify-between mb-3 px-1.5">
+                <h2 className="font-semibold text-slate-900 text-base tracking-tight">
                     {displayDate.toFormat("MMMM yyyy")}
                 </h2>
-                <div className="flex gap-2">
+                <div className="flex gap-1">
                     <button
                         onClick={() => handleMonthChange(-1)}
                         disabled={!allowPast && displayDate.hasSame(today, 'month')}
-                        className="p-2 hover:bg-slate-100 rounded-xl text-slate-900 disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+                        className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-800 disabled:opacity-25 disabled:cursor-not-allowed transition-colors"
                     >
-                        <ChevronLeft size={20} strokeWidth={3} />
+                        <ChevronLeft size={18} strokeWidth={2.5} />
                     </button>
                     <button
                         onClick={() => handleMonthChange(1)}
                         disabled={displayDate.hasSame(today.plus({ months: 1 }), 'month')}
                         // Note: If using strict MAX_BOOKING_DAYS logic, might want to check against maxDate month too
-                        className="p-2 hover:bg-slate-100 rounded-xl text-slate-900 disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+                        className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-800 disabled:opacity-25 disabled:cursor-not-allowed transition-colors"
                     >
-                        <ChevronRight size={20} strokeWidth={3} />
+                        <ChevronRight size={18} strokeWidth={2.5} />
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-3 text-center text-[10px] tracking-wide text-slate-400 mb-4 font-semibold">
+            <div className="grid grid-cols-7 gap-1.5 text-center text-[11px] tracking-wide text-slate-400 mb-2.5 font-semibold">
                 <div>Mon</div>
                 <div>Tue</div>
                 <div>Wed</div>
@@ -77,7 +77,7 @@ export function CalendarWidget({
                 <div>Sat</div>
                 <div>Sun</div>
             </div>
-            <div className="grid grid-cols-7 gap-3 text-center text-sm">
+            <div className="grid grid-cols-7 gap-1.5 text-center text-xs">
                 {calendarDays.map((date) => {
                     const isCurrentMonth = date.hasSame(displayDate, "month");
                     const isSelected = date.hasSame(currentDate, "day");
@@ -88,7 +88,7 @@ export function CalendarWidget({
                     const isDisabled = (!allowPast && isBeforeToday) || isAfterMax;
 
                     if (!isCurrentMonth) {
-                        return <div key={date.toString()} className="h-6 w-6" />;
+                        return <div key={date.toString()} className="h-7 w-7" aria-hidden="true" />;
                     }
 
                     return (
@@ -98,15 +98,15 @@ export function CalendarWidget({
                             onClick={() => onDateSelect(date)}
                             title={isDisabled ? `Bookings are only allowed within the next ${MAX_BOOKING_DAYS} days` : undefined}
                             className={`
-                                h-6 w-6 rounded-md flex flex-col items-center justify-center text-[10px] font-medium transition-all relative
-                                ${isDisabled ? "text-slate-200 cursor-not-allowed" : "text-slate-600 hover:bg-blue-50 hover:text-[#2f6bb0]"}
-                                ${isSelected ? "!bg-[#2f6bb0] !text-white hover:!bg-[#184a8e]" : ""}
-                                ${isToday && !isSelected ? "bg-blue-100/50" : ""}
+                                h-7 w-7 rounded-md inline-flex items-center justify-center font-medium relative transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2f6bb0]/40
+                                ${isDisabled ? "text-slate-300 cursor-not-allowed" : "text-slate-600 hover:bg-blue-50 hover:text-[#2f6bb0]"}
+                                ${isSelected ? "!bg-[#2f6bb0] !text-white hover:!bg-[#184a8e] shadow-sm" : ""}
+                                ${isToday && !isSelected ? "bg-blue-100/70 text-slate-700" : ""}
                             `}
                         >
                             <span className="relative z-10">{date.day}</span>
                             {isToday && (
-                                <div className={`absolute bottom-1 w-1 h-1 rounded-full z-20 ${isSelected ? "bg-white" : "bg-[#2f6bb0] animate-pulse"}`} />
+                                <div className={`absolute bottom-0.5 w-1 h-1 rounded-full z-20 ${isSelected ? "bg-white" : "bg-[#2f6bb0] animate-pulse"}`} />
                             )}
                         </button>
                     );

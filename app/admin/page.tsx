@@ -44,7 +44,7 @@ export default function AdminPage() {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobilePickerOpen, setIsMobilePickerOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
 
   const [viewMode, setViewMode] = useState<'daily' | 'weekly'>('weekly');
@@ -188,9 +188,15 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <div className="flex h-[100dvh] bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:flex-row">
+    <div
+      className={`flex h-[100dvh] bg-[#f8fafc] font-sans text-slate-900 overflow-hidden flex-col lg:grid lg:gap-4 lg:p-4 ${isSidebarCollapsed
+        ? "lg:grid-cols-[minmax(0,1fr)]"
+        : "lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)]"
+        }`}
+      style={{ "--sidebar-width": "280px" } as React.CSSProperties}
+    >
       {!isSidebarCollapsed && (
-        <div className="hidden lg:block h-full border-r border-slate-200 bg-white">
+        <div className="hidden lg:block h-full border border-slate-200 bg-white rounded-[2rem] overflow-hidden">
           <AdminSidebar
             currentDate={currentDate}
             onDateSelect={handleDateSelect}
@@ -201,14 +207,13 @@ export default function AdminPage() {
       )}
 
       {isSidebarOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 lg:hidden backdrop-blur-md transition-opacity" onClick={() => setIsSidebarOpen(false)}>
+        <div className="fixed inset-0 z-[80] bg-slate-900/60 lg:hidden backdrop-blur-md transition-opacity" onClick={() => setIsSidebarOpen(false)}>
           <div className="absolute left-0 top-0 bottom-0 w-[320px] bg-white shadow-2xl overflow-y-auto" onClick={e => e.stopPropagation()}>
             <AdminSidebar
               currentDate={currentDate}
               onDateSelect={handleDateSelect}
               teamMembers={TEAM_MEMBERS}
               allowPast={true}
-              showHomeLink={true}
             />
           </div>
         </div>
@@ -222,7 +227,7 @@ export default function AdminPage() {
         onDateSelect={handleMobileDateSelect}
       />
 
-      <main className="flex-1 flex flex-col min-w-0 bg-white lg:m-4 lg:rounded-[2.5rem] border-0 lg:border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden relative h-full">
+      <main className="flex-1 flex flex-col min-w-0 bg-white lg:rounded-[2.5rem] border-0 lg:border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden relative h-full">
         <AdminHeader
           currentDate={currentDate}
           onSetToday={handleSetToday}

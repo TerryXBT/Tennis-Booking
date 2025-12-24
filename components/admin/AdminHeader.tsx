@@ -28,7 +28,7 @@ export function AdminHeader({
     let dateTitle = "";
 
     if (viewMode === 'daily') {
-        dateTitle = currentDate.toFormat("cccc, d MMMM yyyy");
+        dateTitle = currentDate.toFormat("ccc, d LLL yyyy");
     } else {
         const isSameMonth = currentDate.hasSame(weekEnd, "month");
         dateTitle = isSameMonth

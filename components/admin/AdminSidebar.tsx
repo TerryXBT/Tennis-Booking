@@ -1,5 +1,4 @@
 import { DateTime } from "luxon";
-import Link from "next/link";
 import { CalendarWidget } from "./CalendarWidget";
 
 type AdminSidebarProps = {
@@ -7,7 +6,6 @@ type AdminSidebarProps = {
     onDateSelect: (date: DateTime) => void;
     teamMembers?: Array<{ name: string; avatar: string; color: string }>;
     allowPast?: boolean;
-    showHomeLink?: boolean;
 };
 
 const LOCATIONS = [
@@ -35,10 +33,9 @@ export function AdminSidebar({
     currentDate,
     onDateSelect,
     allowPast = false,
-    showHomeLink = false
 }: AdminSidebarProps) {
     return (
-        <aside className="w-[260px] border-r border-slate-200 bg-white flex flex-col h-full flex-shrink-0 shadow-sm">
+        <aside className="w-full bg-white flex flex-col h-full shadow-sm">
             {/* Brand Header */}
             <div className="p-4 flex items-center justify-between border-b border-slate-50">
                 <div className="flex items-center gap-3">
@@ -52,7 +49,7 @@ export function AdminSidebar({
                 </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+            <div className="flex-1 px-4 py-3 space-y-3">
 
                 {/* Date Picker */}
                 <div className="rounded-2xl border border-slate-100 bg-slate-50/60 p-3">
@@ -64,28 +61,28 @@ export function AdminSidebar({
                 </div>
 
                 {/* Location Context */}
-                <div className="space-y-4">
+                <div className="space-y-3">
                     <div className="px-2 flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
+                        <div className="w-6 h-6 rounded-lg bg-slate-100/70 flex items-center justify-center text-slate-500">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                                 <circle cx="12" cy="10" r="3" />
                             </svg>
                         </div>
-                        <h3 className="font-semibold text-slate-900 text-xs tracking-wide">Our Locations</h3>
+                        <h3 className="font-semibold text-slate-900 text-[11px] tracking-widest uppercase">Our Locations</h3>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-2.5">
                         {LOCATIONS.map((loc) => (
-                            <div key={loc.suburb} className="p-3 bg-slate-50/80 rounded-2xl border border-slate-200/60 group hover:bg-slate-50 hover:border-slate-200 transition-all">
-                                <p className="text-[11px] font-semibold text-slate-400 tracking-wide leading-none mb-1.5">{loc.suburb}</p>
-                                <p className="text-sm font-semibold text-slate-800 leading-tight mb-1">{loc.name}</p>
-                                <p className="text-[11px] text-slate-500 font-medium mb-3">{loc.address}</p>
+                            <div key={loc.suburb} className="p-2.5 bg-white/80 rounded-2xl border border-slate-200/70 group hover:bg-white hover:border-slate-300 transition-all">
+                                <p className="text-[10px] font-semibold text-slate-400 tracking-widest uppercase mb-1">{loc.suburb}</p>
+                                <p className="text-[13px] font-semibold text-slate-800 leading-snug mb-1">{loc.name}</p>
+                                <p className="text-[11px] text-slate-500 font-medium mb-2.5">{loc.address}</p>
                                 <a
                                     href={loc.mapUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 tracking-wide hover:text-slate-700 transition-colors group/link"
+                                    className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-slate-500 tracking-widest uppercase hover:text-slate-700 transition-colors group/link"
                                 >
                                     <span>Get Directions</span>
                                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover/link:translate-x-0.5 transition-transform">
@@ -98,21 +95,6 @@ export function AdminSidebar({
                 </div>
 
             </div>
-
-            {showHomeLink && (
-                <div className="p-4 border-t border-slate-100">
-                    <Link
-                        href="/"
-                        className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2.5 shadow-sm hover:shadow-md transition-all"
-                        aria-label="Back to landing page"
-                    >
-                        <div className="w-12 h-12 bg-[#dfff00] rounded-2xl flex items-center justify-center shadow-lg border border-black/5">
-                            <span className="text-black font-black text-xs">YS</span>
-                        </div>
-                        <div className="text-sm font-semibold text-slate-700">Back to Home</div>
-                    </Link>
-                </div>
-            )}
 
         </aside>
     );
