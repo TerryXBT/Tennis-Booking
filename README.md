@@ -1,5 +1,7 @@
 # Tennis Lesson Booking System
 
+🎾 **[Live Demo](https://tennis-booking-sigma.vercel.app/booking)** 🎾
+
 A modern, mobile-friendly web application for booking tennis lessons. Built with Next.js 14, Supabase, and TailwindCSS.
 
 ## Screenshots
@@ -40,8 +42,8 @@ A modern, mobile-friendly web application for booking tennis lessons. Built with
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/tennis-booking.git
-   cd tennis-booking
+   git clone https://github.com/TerryXBT/Tennis-Booking.git
+   cd Tennis-Booking
    ```
 
 2. Install dependencies:
